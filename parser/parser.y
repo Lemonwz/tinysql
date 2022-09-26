@@ -3807,7 +3807,11 @@ JoinTable:
 	/* Use %prec to evaluate production TableRef before cross join */
 	TableRef CrossOpt TableRef %prec tableRefPriority
 	{
-		$$ = &ast.Join{Left: $1.(ast.ResultSetNode), Right: $3.(ast.ResultSetNode), Tp: ast.CrossJoin}
+		$$ = &ast.Join{
+			Left: $1.(ast.ResultSetNode),
+			Right: $3.(ast.ResultSetNode),
+			Tp: ast.CrossJoin,
+		}
 	}
 	/* Project 2: your code here.
 	 * You can see details about JoinTable in https://dev.mysql.com/doc/refman/8.0/en/join.html
@@ -3819,6 +3823,15 @@ JoinTable:
          * }
          *
 	 */
+|	TableRef JoinType OuterOpt "JOIN" TableRef "ON" Expression %prec tableRefPriority
+	{
+		$$ = &ast.Join{
+			Left: $1.(ast.ResultSetNode),
+			Right: $5.(ast.ResultSetNode),
+			Tp: $2.(ast.JoinType),
+			On: &ast.OnCondition{Expr: $7},
+		}
+	}
 
 JoinType:
 	"LEFT"
