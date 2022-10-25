@@ -102,7 +102,7 @@ func DecodeRecordKey(key kv.Key) (tableID int64, handle int64, err error) {
 	k := key
 
 	// check if the key is valid
-	if len(key) != RecordRowKeyLen {
+	if len(key) <= prefixLen {
 		err = errInvalidRecordKey.GenWithStack("invalid record key - %q", k)
 		return
 	}
