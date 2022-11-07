@@ -284,6 +284,10 @@ test-proj4-1:
 	cd planner/core && \
 	go test -check.f TestPredicatePushDown
 
+test-proj4-1-extra:
+	cd planner/cascades && \
+	go test -check.f "TestPredicatePushDown|TestMergeAggregationProjection"
+
 test-proj4-2:
 	cd planner/core && \
 	go test -check.f TestSkylinePruning
