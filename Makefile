@@ -288,6 +288,14 @@ test-proj4-1-extra:
 	cd planner/cascades && \
 	go test -check.f "TestPredicatePushDown|TestMergeAggregationProjection"
 
+test-proj4-2-cmsketch:
+	cd statistics && \
+	go test -check.f "TestCMSketch|TestCMSketchCoding"
+
+test-proj4-2-join-reorder:
+	cd planner/core && \
+	go test -check.f "TestDPReorderTPCHQ5|TestDPReorderAllCartesian"
+
 test-proj4-2:
 	cd planner/core && \
 	go test -check.f TestSkylinePruning
